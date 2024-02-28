@@ -19,8 +19,8 @@ function App() {
       <main className=''>
         <HeroSection />
         <AboutSection />
-        <OnlineCertifiedCourse />
         <InternshipOpportunity/>
+        <OnlineCertifiedCourse />
         <Eligibility/>
         <Purpose />
         <Founder />

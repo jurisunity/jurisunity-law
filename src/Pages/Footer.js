@@ -29,7 +29,7 @@ const Footer = () => {
                 className="text-white hover:text-blue-400 transition duration-300"
               />
             </a>
-            <a href="#" className="mr-4">
+            <a href="https://www.instagram.com/jurisunity?igsh=eGtyM3Rpa3l6Y2Ux" className="mr-4">
               <FontAwesomeIcon
                 icon={faInstagram}
                 size="2x"

@@ -8,39 +8,31 @@ import "react-toastify/dist/ReactToastify.css";
 import emailjs, { init } from "@emailjs/browser";
 
 const ContactSection = () => {
+  const form = useRef();
   const SignupSchema = Yup.object().shape({
-    user_name: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    // mobileNumber: Yup.string().min(2, "Too Short!").max(50, "Too Long!"),
-    // education: Yup.string()
-    //   .min(2, "Too Short!")
-    //   .max(50, "Too Long!")
-    //   .required("Required"),
-    message: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
+    user_name: Yup.string().required("Required"),
+    message: Yup.string().required("Required"),
     user_email: Yup.string().email("Invalid email").required("Required"),
   });
 
   const handleSubmitform = (value) => {
-    // value.preventDefault();
     console.log(value);
- 
+
     emailjs
-      .sendForm('service_7gm38cg', 'template_zdq0rf6', value, {
-        publicKey: '_pat6VP2LDnUF55Mg',
+      .sendForm("service_7gm38cg", "template_zdq0rf6", form.current, {
+        publicKey: "_pat6VP2LDnUF55Mg",
       })
       .then(
         () => {
-          console.log('SUCCESS!');
-          formik.resetForm()
+          console.log("SUCCESS!");
+          toast.success(
+            "Dear User, your request was send to our Team.We will connect soon"
+          );
+          formik.resetForm();
         },
         (error) => {
-          console.log('FAILED...', error.text);
-        },
+          console.log("FAILED...", error.text);
+        }
       );
   };
 
@@ -49,14 +41,12 @@ const ContactSection = () => {
     initialValues: {
       user_name: "",
       user_email: "",
-      // mobileNumber: "",
-      // education: "",
+      user_mobile: "",
+      user_education: "",
       message: "",
     },
     onSubmit: (values) => {
-   
-      handleSubmitform(values)
- 
+      handleSubmitform(values);
     },
   });
   return (
@@ -83,7 +73,7 @@ const ContactSection = () => {
                 </a>{" "}
               </span>
             </p>
-            <form onSubmit={formik.handleSubmit}>
+            <form ref={form} onSubmit={formik.handleSubmit}>
               <input
                 className="block w-full bg-gray-200 border-2 border-gray-200 rounded-md py-2 px-4 mb-4 focus:outline-none focus:bg-white focus:border-blue-500"
                 type="text"
@@ -100,27 +90,27 @@ const ContactSection = () => {
                 onChange={formik.handleChange}
                 value={formik.values.user_email}
               />
-              {/* <input
+              <input
                 className="block w-full bg-gray-200 border-2 border-gray-200 rounded-md py-2 px-4 mb-4 focus:outline-none focus:bg-white focus:border-blue-500"
                 type="tel"
-                name="mobileNumber"
+                name="user_mobile"
                 placeholder="Your Mobile Number"
                 onChange={formik.handleChange}
-                value={formik.values.mobileNumber}
-              /> */}
-              {/* <input
+                value={formik.values.user_mobile}
+              />
+              <input
                 className="block w-full bg-gray-200 border-2 border-gray-200 rounded-md py-2 px-4 mb-4 focus:outline-none focus:bg-white focus:border-blue-500"
                 type="text"
-                name="education"
+                name="user_education"
                 placeholder="Your Education"
                 onChange={formik.handleChange}
-                value={formik.values.education}
-              /> */}
+                value={formik.values.user_education}
+              />
               <textarea
                 className="block w-full bg-gray-200 border-2 border-gray-200 rounded-md py-2 px-4 mb-4 focus:outline-none focus:bg-white focus:border-blue-500"
                 rows="4"
                 name="message"
-                placeholder="Your Message"
+                placeholder="Your Message(Eg. Interested in Internship program or Interested in Certified Course( with course name)) "
                 onChange={formik.handleChange}
                 value={formik.values.message}
               ></textarea>
@@ -155,7 +145,6 @@ const ContactSection = () => {
 };
 
 export default ContactSection;
-
 
 // const ContactSection = () => {
 //   const form = useRef();
